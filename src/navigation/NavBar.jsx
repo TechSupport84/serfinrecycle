@@ -31,6 +31,7 @@ const NavBar = ({ searchTerm, setSearchTerm }) => {
         <>
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="flex h-16 items-center justify-between">
+              
               {/* Mobile Menu Button */}
               <div className="flex items-center sm:hidden">
                 <Disclosure.Button className="p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:ring-2 focus:ring-white">
@@ -47,7 +48,7 @@ const NavBar = ({ searchTerm, setSearchTerm }) => {
                 <input
                   type="search"
                   placeholder="Search for Products"
-                  className="ml-4 p-2 bg-gray-800 border border-gray-500 rounded-md w-48 sm:w-64 text-white focus:outline-none"
+                  className="ml-4 p-2 bg-gray-800 border border-gray-500 rounded-md w-full sm:w-64 text-white focus:outline-none"
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                 />
@@ -125,7 +126,7 @@ const NavBar = ({ searchTerm, setSearchTerm }) => {
           <Disclosure.Panel className="sm:hidden">
             <div className="px-2 pt-2 pb-3 space-y-1">
               {navigation.map((item) => (
-                <Disclosure.Button key={item.name} as={Link} to={item.href} className="block px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">
+                <Disclosure.Button key={item.name} as={Link} to={item.href} className="flex items-center px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">
                   {item.icon} {item.name}
                 </Disclosure.Button>
               ))}

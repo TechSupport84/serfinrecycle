@@ -56,11 +56,15 @@ function Home() {
     setFilteredProducts(filtered);
   };
 
-  if (loading) return <p className="text-blue-500 text-xl text-center">Loading products...</p>;
-  if (error) return <p className="text-red-800 text-2xl text-center">{error}</p>;
+  if (loading)
+    return (
+      <p className="text-blue-500 text-xl text-center">Loading products...</p>
+    );
+  if (error)
+    return <p className="text-red-800 text-2xl text-center">{error}</p>;
 
   return (
-    <div className="w-full min-h-screen bg-gray-800"> 
+    <div className="w-full min-h-screen bg-gray-800 mt-10">
       <NavBar searchTerm={searchTerm} setSearchTerm={handleSearch} />
       <div className="flex flex-col md:flex-row items-center justify-between bg-gray-800 p-4 rounded-lg shadow-lg mt-4 w-full">
         <div className="flex flex-wrap items-center gap-4">
@@ -69,17 +73,23 @@ function Home() {
           </span>
           {data.map((item) => (
             <div key={item.id}>
-              <Category pressed={() => filterByCategorie(item.name)} {...item} />
+              <Category
+                pressed={() => filterByCategorie(item.name)}
+                {...item}
+              />
             </div>
           ))}
         </div>
-        <div className="mt-4 md:mt-0">
-          <span onClick={() => navigate("/exchange")} className="cursor-pointer text-orange-500 text-lg font-semibold px-4 py-2 bg-gray-900 rounded-lg shadow-md hover:bg-orange-500 hover:text-white hover:underline">
+        <div className="mt-10 md:mt-0">
+          <span
+            onClick={() => navigate("/exchange")}
+            className="cursor-pointer text-orange-500 text-lg font-semibold px-4 py-2 bg-gray-900 rounded-lg shadow-md hover:bg-orange-500 hover:text-white hover:underline"
+          >
             Ex-Change
           </span>
         </div>
       </div>
-      <div className="w-full mt-4">
+      <div className="w-full mt-10">
         <Products products={filteredProducts} />
       </div>
     </div>
