@@ -64,7 +64,7 @@ function Home() {
     return <p className="text-red-800 text-2xl text-center">{error}</p>;
 
   return (
-    <div className="w-full min-h-screen bg-gray-800 mt-10">
+    <div className=" w-full min-h-screen bg-gray-900 mt-10 ">
       <NavBar searchTerm={searchTerm} setSearchTerm={handleSearch} />
       <div className="flex flex-col md:flex-row items-center justify-between bg-gray-800 p-4 rounded-lg shadow-lg mt-4 w-full">
         <div className="flex flex-wrap items-center gap-4">

@@ -49,7 +49,7 @@ function Products({ products }) {
             ) : (
               <p className="text-gray-500 text-center py-5">No Image Available</p>
             )}
-            <div className="p-2 bg-gray-800 rounded-b-lg w-full">
+            <div className="p-2 bg-gray-900 rounded-b-lg w-full">
               <h1 className="text-lg font-bold text-gray-400">{item.name}</h1>
               <div className="flex flex-col">
                 <span className="text-gray-600">
