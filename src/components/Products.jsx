@@ -38,7 +38,7 @@ function Products({ products }) {
                   className="h-48 w-full object-cover rounded-t-lg hover:opacity-85 transition duration-300 ease-in-out"
                 />
                 <button
-                  className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 text-white font-semibold px-4 py-2 rounded opacity-0 group-hover:opacity-100 transition duration-300 ease-in-out"
+                  className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 text-white font-semibold px-4 py-2 rounded opacity-0 group-hover:opacity-100 transition duration-300 ease-in-out mb-11"
                   onClick={() => navigate(`/product/${item._id}`)}
                 >
                   <span className="border border-gray-500 bg-gray-800 p-1 rounded hover:bg-blue-500">
@@ -71,7 +71,7 @@ function Products({ products }) {
               </div>
               <button
                 onClick={() => addToCart(item)}
-                className="mt-3 w-full bg-orange-600 text-white py-3 rounded-lg text-lg font-semibold hover:bg-orange-700 transition"
+                className="mt-1 w-full bg-orange-600 text-white py-3 rounded-lg text-lg font-semibold hover:bg-orange-700 transition"
               >
                 Add to Cart
               </button>
