@@ -5,64 +5,69 @@ import {
   Home,
   Settings,
   BarChart,
-  BikeIcon,
-  BetweenHorizonalStartIcon,
+  ShoppingCart,
+  Package,
 } from "lucide-react";
-import ProductManange from "../screens/ProductManange";
+import ProductManage from "../screens/ProductManange";
+import { Link } from "react-router-dom";
+import ProductManager from "./ProductManager";
 
 function DashBoard() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-  const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
   const [currentPage, setCurrentPage] = useState("Dashboard");
+  
+  const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
+
+  const navItems = [
+    { name: "Dashboard", icon: <Home size={20} />, page: "Dashboard" },
+    { name: "Product Management", icon: <BarChart size={20} />, page: "AllProducts" },
+    { name: "Analytics", icon: <BarChart size={20} />, page: "Analytics" },
+    { name: "Add New Product", icon: <Package size={20} />, page: "Products" },
+    { name: "Orders", icon: <ShoppingCart size={20} />, page: "Orders" },
+    { name: "Settings", icon: <Settings size={20} />, page: "Settings" },
+  ];
 
   const renderContent = () => {
     switch (currentPage) {
       case "Dashboard":
         return (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div className="bg-white p-5 rounded-lg shadow-md">
-              <h3 className="text-lg font-semibold">Total Sales</h3>
-              <p className="text-2xl font-bold mt-2">$12,500</p>
-            </div>
-            <div className="bg-white p-5 rounded-lg shadow-md">
-              <h3 className="text-lg font-semibold">New Users</h3>
-              <p className="text-2xl font-bold mt-2">345</p>
-            </div>
-            <div className="bg-white p-5 rounded-lg shadow-md">
-              <h3 className="text-lg font-semibold">Orders</h3>
-              <p className="text-2xl font-bold mt-2">1,234</p>
-            </div>
+            {[
+              { title: "Total Sales", value: "$12,500" },
+              { title: "New Users", value: "345" },
+              { title: "Orders", value: "1,234" },
+            ].map((item, index) => (
+              <div key={index} className="bg-white p-5 rounded-lg shadow-md">
+                <h3 className="text-lg font-semibold">{item.title}</h3>
+                <p className="text-2xl font-bold mt-2">{item.value}</p>
+              </div>
+            ))}
+             
+            <a href="">Add Product</a>
           </div>
         );
+     case "AllProducts":
+          return  <ProductManager/>
       case "Analytics":
-        return (
-        <>
-        <h2 className="text-xl">Analytics Page Content</h2>
-
-        </>
-        );
+        return <h2 className="text-xl font-semibold">Analytics Page Content</h2>;
       case "Products":
-        return (
-          <>
-           <ProductManange/>
-          </>
-        )
+        return <ProductManage />;
       case "Orders":
-        return <h2 className="text-xl">Orders Page Content</h2>;
+        return <h2 className="text-xl font-semibold">Orders Page Content</h2>;
       case "Settings":
-        return <h2 className="text-xl">Settings Page Content</h2>;
+        return <h2 className="text-xl font-semibold">Settings Page Content</h2>;
       default:
-        return <h2 className="text-xl">Page Not Found</h2>;
+        return <h2 className="text-xl font-semibold">Page Not Found</h2>;
     }
   };
 
   return (
-    <div className="flex h-screen bg-gray-100 mt-10">
+    <div className="flex  bg-gray-100 mt-10">
       {/* Sidebar */}
       <aside
         className={`${
           isSidebarOpen ? "w-64" : "w-20"
-        } bg-gray-900 text-white flex flex-col p-5 transition-width duration-300 ease-in-out lg:w-64 md:w-48 sm:w-20`}
+        } bg-gray-900 text-white flex flex-col p-5 transition-all duration-300 ease-in-out`}
       >
         <button className="text-white mb-6 lg:hidden" onClick={toggleSidebar}>
           {isSidebarOpen ? "Close" : "Open"}
@@ -72,51 +77,18 @@ function DashBoard() {
         </h2>
         <nav className="flex-1">
           <ul className="space-y-4">
-            <li
-              className={`flex items-center space-x-3 p-3 rounded-lg cursor-pointer ${
-                currentPage === "Dashboard" ? "bg-gray-800" : "hover:bg-gray-800"
-              }`}
-              onClick={() => setCurrentPage("Dashboard")}
-            >
-              <Home size={20} />
-              <span className={`${!isSidebarOpen && "hidden"}`}>Dashboard</span>
-            </li>
-            <li
-              className={`flex items-center space-x-3 p-3 rounded-lg cursor-pointer ${
-                currentPage === "Analytics" ? "bg-gray-800" : "hover:bg-gray-800"
-              }`}
-              onClick={() => setCurrentPage("Analytics")}
-            >
-              <BarChart size={20} />
-              <span className={`${!isSidebarOpen && "hidden"}`}>Analytics</span>
-            </li>
-            <li
-              className={`flex items-center space-x-3 p-3 rounded-lg cursor-pointer ${
-                currentPage === "Products" ? "bg-gray-800" : "hover:bg-gray-800"
-              }`}
-              onClick={() => setCurrentPage("Products")}
-            >
-              <BetweenHorizonalStartIcon size={20} />
-              <span className={`${!isSidebarOpen && "hidden"}`}>Products</span>
-            </li>
-            <li
-              className={`flex items-center space-x-3 p-3 rounded-lg cursor-pointer ${
-                currentPage === "Orders" ? "bg-gray-800" : "hover:bg-gray-800"
-              }`}
-              onClick={() => setCurrentPage("Orders")}
-            >
-              <BikeIcon size={20} />
-              <span className={`${!isSidebarOpen && "hidden"}`}>Orders</span>
-            </li>
-            <li
-              className={`flex items-center space-x-3 p-3 rounded-lg cursor-pointer ${
-                currentPage === "Settings" ? "bg-gray-800" : "hover:bg-gray-800"
-              }`}
-              onClick={() => setCurrentPage("Settings")}
-            >
-              <Settings size={20} />
-              <span className={`${!isSidebarOpen && "hidden"}`}>Settings</span>
-            </li>
+            {navItems.map((item) => (
+              <li
+                key={item.page}
+                className={`flex items-center space-x-3 p-3 rounded-lg cursor-pointer ${
+                  currentPage === item.page ? "bg-gray-800" : "hover:bg-gray-800"
+                }`}
+                onClick={() => setCurrentPage(item.page)}
+              >
+                {item.icon}
+                <span className={`${!isSidebarOpen && "hidden"}`}>{item.name}</span>
+              </li>
+            ))}
           </ul>
         </nav>
       </aside>

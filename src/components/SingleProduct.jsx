@@ -4,14 +4,15 @@ import { useParams } from "react-router-dom";
 import { API_URL, API_URL_IMAGE } from "../constants/API_URL";
 import { format } from "date-fns";
 import { ToastContainer, toast } from "react-toastify";
-import { useAuth } from "../context/AuthContext";
+import { useDispatch } from "react-redux";
+import { addItems } from "../features/CartSlices";
 
 function SingleProduct() {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
   const [addedQuantity, setAddedQuantity] = useState(1);
-  const { user, token } = useAuth();
   const [mainImage, setMainImage] = useState(null);
+  const dispatch = useDispatch()
 
   const formData = (date) => {
     if (!date) return "Date not available";
@@ -41,29 +42,13 @@ function SingleProduct() {
     getSingleProduct();
   }, [id]);
 
-  const addToCart = async () => {
-    if (!user || !token) {
-      toast.error("You must be logged in to add to cart");
-      return;
-    }
-    try {
-      await axios.post(
-        `${API_URL}/carts/add`,
-        {
-          userId: user?._id,
-          productId: product?._id,
-          quantity: addedQuantity,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}` },
-        }
-      );
-      toast.success("Added to cart");
-    } catch (error) {
-      toast.error("Error adding to cart");
-      console.error(error);
-    }
+  
+
+
+  const addToCart = (product) => {
+    dispatch(addItems(product));
+    console.log("Added!", product);
+    toast.success("Product added successfully!");
   };
 
   return (
@@ -114,7 +99,7 @@ function SingleProduct() {
 
             {/* ✅ Add to Cart */}
             <button
-              onClick={addToCart}
+              onClick={()=>addToCart(product)}
               className="border border-gray-800 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition"
               disabled={product.stock === 0}
             >

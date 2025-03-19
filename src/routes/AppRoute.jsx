@@ -16,6 +16,8 @@ import SubscribeAffiliate from '../pages/SubscribeAffiliate'
 import Account from '../pages/Account'
 import DashBoard from '../DashBoard/DashBoard'
 import ProductManange from '../screens/ProductManange'
+import ProductManager from '../DashBoard/ProductManager'
+import EditProduct from '../DashBoard/EditProduct'
 
 function AppRoute() {
   const {user } = useAuth()
@@ -47,6 +49,8 @@ function AppRoute() {
         <Route path="/dashboard" element={<DashBoard />} />
         
         <Route path='/product-management' element ={<ProductManange/>}/>
+        <Route path='/Products' element ={<ProductManager/>}/>
+        <Route path='/editProduct/:id' element ={<EditProduct/>}/>
         </>
 )}
     </Routes>
