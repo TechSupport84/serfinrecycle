@@ -14,6 +14,8 @@ import ExchangeProduct from '../pages/Ex-ChangePhone'
 import SellProduct from '../pages/SellProduct'
 import SubscribeAffiliate from '../pages/SubscribeAffiliate'
 import Account from '../pages/Account'
+import DashBoard from '../DashBoard/DashBoard'
+import ProductManange from '../screens/ProductManange'
 
 function AppRoute() {
   const {user } = useAuth()
@@ -30,14 +32,23 @@ function AppRoute() {
         <Route path='/ordered' element ={ <OrderedProducts/>}/>
         <Route path='/cancel' element ={<CancelPayment/>}/>
         <Route path='/Success'element ={<SuccessPayment/>}/>
+        
           </>
       )}
+
         <Route path ="/register"  element ={<Register/>}/>
         <Route path ="/login"  element ={<Login/>}/>
         <Route path = "/exchange" element ={<ExchangeProduct/>}/>
         <Route path ="/sell" element ={<SellProduct/>} />
         <Route path='/subscribe' element ={<SubscribeAffiliate/>}/>
         <Route path ="/account" element ={<Account/>} />
+        {user && user.role === "admin" && (
+        <>
+        <Route path="/dashboard" element={<DashBoard />} />
+        
+        <Route path='/product-management' element ={<ProductManange/>}/>
+        </>
+)}
     </Routes>
  </Router>
   )

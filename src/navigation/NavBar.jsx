@@ -2,7 +2,7 @@ import { Disclosure, Menu } from '@headlessui/react';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import React from 'react';
 import { BiSolidUserAccount, BiLogIn, BiUserPlus, BiLogOut } from 'react-icons/bi';
-import { MdMonetizationOn, MdSell } from "react-icons/md";
+import { MdDashboard, MdMonetizationOn, MdSell } from "react-icons/md";
 import { useAuth } from '../context/AuthContext';
 import { GrOrderedList } from 'react-icons/gr';
 import { useSelector } from 'react-redux';
@@ -90,6 +90,21 @@ const NavBar = ({ searchTerm, setSearchTerm }) => {
                         </Link>
                       )}
                     </Menu.Item>
+                     {user && user.role ==="admin" &&(
+                      <>
+                      <Menu.Item>
+                      {({ active }) => (
+                        <Link to="/dashboard" className={classNames(active && 'bg-gray-100', 'flex items-center px-4 py-2 text-sm text-gray-700')}>
+                          <MdDashboard className="size-5 mr-2" /> Dashboard
+                        </Link>
+                      )}
+                    </Menu.Item>
+                      
+                      </>
+                     )}
+
+
+
                     {user ? (
                       <Menu.Item>
                         {({ active }) => (

@@ -1,2 +1,2 @@
-export const API_URL ="https://serfin-backend.onrender.com/api"
-export const API_URL_IMAGE ="https://serfin-backend.onrender.com"
+export const API_URL ="http://localhost:5000/api"
+export const API_URL_IMAGE ="http://localhost:5000"

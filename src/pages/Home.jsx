@@ -19,13 +19,9 @@ function Home() {
     const fetchProducts = async () => {
       try {
         const { data } = await axios.get(`${API_URL}/product/products`);
-        if (data && Array.isArray(data.product)) {
-          setProducts(data.product);
-          setFilteredProducts(data.product);
-        } else {
-          setError("Invalid response format: Expected an array.");
-          console.error("Unexpected API response format:", data);
-        }
+          setProducts(data.products);
+          setFilteredProducts(data.products);
+          console.log("products", data.products)
       } catch (error) {
         console.error("Error fetching products:", error);
         setError("Failed to fetch products.");
@@ -91,6 +87,7 @@ function Home() {
       </div>
       <div className="w-full mt-10">
         <Products products={filteredProducts} />
+
       </div>
     </div>
   );

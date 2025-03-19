@@ -14,6 +14,8 @@ function Products({ products }) {
     return <p className="text-red-500 text-center">Invalid products data</p>;
   }
 
+  console.log("Products: ", products);
+
   const addToCart = (product) => {
     dispatch(addItems(product));
     console.log("Added!", product);
@@ -21,7 +23,7 @@ function Products({ products }) {
   };
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 p-4 w-full ">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 p-4 w-full">
       {products.length === 0 ? (
         <p className="text-gray-500 text-center">No products available</p>
       ) : (
@@ -30,25 +32,23 @@ function Products({ products }) {
             key={item._id}
             className="relative flex flex-col w-full h-[350px] hover:shadow-lg hover:shadow-gray-600 group"
           >
-            {item.image && item.image.length > 0 ? (
-              <>
-                <img
-                  src={`${API_URL_IMAGE}/${item.image}`}
-                  alt={item.name}
-                  className="h-48 w-full object-cover rounded-t-lg hover:opacity-85 transition duration-300 ease-in-out"
-                />
-                <button
-                  className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 text-white font-semibold px-4 py-2 rounded opacity-0 group-hover:opacity-100 transition duration-300 ease-in-out mb-11"
-                  onClick={() => navigate(`/product/${item._id}`)}
-                >
-                  <span className="border border-gray-500 bg-gray-800 p-1 rounded hover:bg-blue-500">
-                    View details
-                  </span>
-                </button>
-              </>
+            {Array.isArray(item.image) && item.image.length > 0 ? (
+              <img
+                src={`${API_URL_IMAGE}/${item.image[0]}`} // ✅ Show first image if array
+                alt={item.name}
+                className="h-48 w-full object-cover rounded-t-lg hover:opacity-85 transition duration-300 ease-in-out"
+              />
             ) : (
               <p className="text-gray-500 text-center py-5">No Image Available</p>
             )}
+            <button
+              className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 text-white font-semibold px-4 py-2 rounded opacity-0 group-hover:opacity-100 transition duration-300 ease-in-out mb-11"
+              onClick={() => navigate(`/product/${item._id}`)}
+            >
+              <span className="border border-gray-500 bg-gray-800 p-1 rounded hover:bg-blue-500">
+                View details
+              </span>
+            </button>
             <div className="p-2 bg-gray-900 rounded-b-lg w-full">
               <h1 className="text-lg font-bold text-gray-400">{item.name}</h1>
               <div className="flex flex-col">
