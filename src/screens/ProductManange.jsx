@@ -9,43 +9,52 @@ function ProductManage() {
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
   const [brand, setBrand] = useState("");
-  const [stock, setStock] = useState();
+  const [stock, setStock] = useState("");
   const [images, setImages] = useState([]);
-  const [previews, setPreviews] = useState([]);
+  const [storedImageURLs, setStoredImageURLs] = useState([]);
   const [error, setError] = useState("");
   const { token } = useAuth();
 
   const handleUploadImages = (e) => {
     const files = Array.from(e.target.files);
-
     if (files.length > 3) {
       setError("You can only upload up to 3 images.");
       return;
     }
-
     setImages(files);
-    setPreviews(files.map((file) => URL.createObjectURL(file)));
     setError("");
   };
 
   useEffect(() => {
-    return () => {
-      previews.forEach((preview) => URL.revokeObjectURL(preview));
+    const fetchStoredImages = async () => {
+      try {
+        const response = await axios.get(`${API_URL}/product/images`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        setStoredImageURLs(response.data.map(img => `${API_URL}/uploads/${img}`));
+      } catch (error) {
+        console.error("Error fetching images", error);
+      }
     };
-  }, [previews]);
+    fetchStoredImages();
+  }, [token]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!name || !description || !price || !brand || !stock || images.length === 0) {
+      setError("All fields are required, including images.");
+      return;
+    }
+    
     const formData = new FormData();
-    formData.append("name", name);
-    formData.append("description", description);
+    formData.append("name", name.trim());
+    formData.append("description", description.trim());
     formData.append("price", price);
-    formData.append("brand", brand);
+    formData.append("brand", brand.trim());
     formData.append("stock", stock);
-
-    images.forEach((image) => {
-      formData.append("image", image);
-    });
+    images.forEach((image) => formData.append("images", image));  // Fixed key name
 
     try {
       await axios.post(`${API_URL}/product/create`, formData, {
@@ -54,17 +63,16 @@ function ProductManage() {
           Authorization: `Bearer ${token}`,
         },
       });
-       toast.success("Product added Successfully ! ")
+      toast.success("Product added successfully!");
       setName("");
       setDescription("");
       setPrice("");
       setBrand("");
-      setStock(0);
+      setStock("");
       setImages([]);
-      setPreviews([]);
       setError("");
     } catch (error) {
-      setError("Error adding product! Check your inputs.",error);
+      setError("Error adding product! Please try again: " + (error.response?.data?.message || error.message));
     }
   };
 
@@ -99,7 +107,7 @@ function ProductManage() {
             value={price}
             placeholder="Product Price"
             required
-            onChange={(e) => setPrice(Number(e.target.value))}
+            onChange={(e) => setPrice(e.target.value)}
             className="w-full p-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
           />
           <input
@@ -115,7 +123,7 @@ function ProductManage() {
             value={stock}
             placeholder="Product Stock"
             required
-            onChange={(e) => setStock(Number(e.target.value))}
+            onChange={(e) => setStock(e.target.value)}
             className="w-full p-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
           />
           <input
@@ -135,21 +143,20 @@ function ProductManage() {
           </button>
         </form>
 
-        {/* Image Previews */}
-        {previews.length > 0 && (
+        {storedImageURLs.length > 0 && (
           <div className="mt-5 grid grid-cols-3 gap-3">
-            {previews.map((preview, index) => (
+            {storedImageURLs.map((imageUrl, index) => (
               <img
                 key={index}
-                src={preview}
-                alt={`preview-${index}`}
+                src={imageUrl}
+                alt={`Stored Image ${index + 1}`}
                 className="border rounded-lg shadow-md w-full h-24 object-cover"
               />
             ))}
           </div>
         )}
-
-           <ToastContainer position="top-right" autoClose={3000} />
+        
+        <ToastContainer position="top-right" autoClose={3000} />
       </div>
     </div>
   );

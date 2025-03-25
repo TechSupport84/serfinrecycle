@@ -34,7 +34,7 @@ function Products({ products }) {
           >
             {Array.isArray(item.image) && item.image.length > 0 ? (
               <img
-                src={`${API_URL_IMAGE}/${item.image[0]}`} // ✅ Show first image if array
+                src={`${API_URL_IMAGE}/${item.image[0].replace('/opt/render/project/src/', '')}`}
                 alt={item.name}
                 className="h-48 w-full object-cover rounded-t-lg hover:opacity-85 transition duration-300 ease-in-out"
               />

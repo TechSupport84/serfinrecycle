@@ -58,7 +58,7 @@ function EditProduct() {
       formData.append('price', price);
       formData.append('brand', brand);
       formData.append('stock', stock);
-      images.forEach((image) => formData.append('images', image));
+      images.forEach((image) => formData.append('image', image));
 
       await axios.put(`${API_URL}/product/update/${id}`, formData, {
         headers: {
@@ -67,7 +67,7 @@ function EditProduct() {
         },
       });
 
-      navigate('/products'); // Redirect to products page after update
+      navigate('/products'); 
     } catch (error) {
       setError('Error updating product',error);
     }

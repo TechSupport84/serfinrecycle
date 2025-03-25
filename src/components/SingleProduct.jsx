@@ -59,7 +59,7 @@ function SingleProduct() {
           <div className="flex flex-col items-center">
             {mainImage ? (
               <img
-                src={`${API_URL_IMAGE}/${mainImage}`}
+                src={`${API_URL_IMAGE}/${mainImage.replace('/opt/render/project/src/', '')}`}
                 alt={product.name || "Product Image"}
                 className="w-full max-w-md rounded-lg shadow-lg object-cover"
               />
@@ -73,7 +73,7 @@ function SingleProduct() {
                 product.image.map((img, index) => (
                   <img
                     key={index}
-                    src={`${API_URL_IMAGE}/${img}`}
+                    src={`${API_URL_IMAGE}/${img.replace('/opt/render/project/src/', '')}`}
                     alt={`Thumbnail ${index}`}
                     className={`w-20 h-20 rounded-md cursor-pointer border-2 ${mainImage === img ? "border-blue-500" : "border-gray-300"}`}
                     onClick={() => setMainImage(img)}
