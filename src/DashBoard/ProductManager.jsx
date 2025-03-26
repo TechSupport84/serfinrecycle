@@ -50,7 +50,7 @@ function ProductManager() {
             <h3 className='text-lg font-medium text-gray-900'>{item.name}</h3>
             {Array.isArray(item.image) && item.image.length > 0 ? (
               <img
-                src={`${API_URL_IMAGE}/${item.image[0]}`}
+                src={`${API_URL_IMAGE}/${item.image[0].replace('/opt/render/project/src/', '')}`}
                 alt={item.name}
                 className='h-48 w-full object-cover rounded-md mt-2'
               />

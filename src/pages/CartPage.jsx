@@ -95,7 +95,7 @@ const CartPage = () => {
           <div key={item._id} className="mb-6 p-4 border border-gray-600 rounded-lg bg-gray-700">
             <div className="flex flex-wrap items-center mb-4">
               <img
-                src={`${API_URL_IMAGE}/${Array.isArray(item.image) ? item.image[0] : item.image}`} 
+                src={`${API_URL_IMAGE}/${Array.isArray(item.image) ? item.image[0].replace('/opt/render/project/src/', '') : item.image}`} 
                 alt={item.name}
                 className="w-full md:w-24 h-24 object-cover rounded mb-3 md:mb-0 mr-0 md:mr-4"
               />
